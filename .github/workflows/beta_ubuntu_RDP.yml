@@ -11,7 +11,7 @@ jobs:
     - name: Install Unzipper
       run: sudo apt-get install unzip -y
     - name: Download
-      run: wget -O ngrok.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip
+      run: wget -O ngrok.zip https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
     - name: Extract
       run: unzip ngrok.zip
     - name: Install Libraries
