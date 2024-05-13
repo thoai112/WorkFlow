@@ -1,0 +1,38 @@
+
+name: CI [MacOS] beta
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - name: Install Brew
+      run: |
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        echo 'eval $(/opt/homebrew/bin/brew shellenv)' >> ~/.zprofile
+        eval $(/opt/homebrew/bin/brew shellenv)
+    - name: Install Ngrok
+      run: |
+        brew install unzip
+        brew install --cask ngrok
+    - name: Adding New User
+      run: |
+        sudo su
+        dscl . -create /Users/joeadmin
+        dscl . -create /Users/joeadmin UserShell /bin/bash
+        dscl . -create /Users/joeadmin RealName "Joe Admin" 
+        dscl . -create /Users/joeadmin UniqueID "510"
+        dscl . -create /Users/joeadmin PrimaryGroupID 20
+        dscl . -create /Users/joeadmin NFSHomeDirectory /Users/joeadmin
+        dscl . -passwd /Users/joeadmin password 
+        dscl . -append /Groups/admin GroupMembership joeadmin
+
+    - name: Ngrok Auth
+      env:
+        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+      run: |
+        ngrok authtoken $NGROK_AUTH_TOKEN
+        ngrok tcp 22
