@@ -20,15 +20,15 @@ jobs:
         brew install --cask ngrok
     - name: Adding New User
       run: |
-        sudo su
-        dscl . -create /Users/joeadmin
-        dscl . -create /Users/joeadmin UserShell /bin/bash
-        dscl . -create /Users/joeadmin RealName "Joe Admin" 
-        dscl . -create /Users/joeadmin UniqueID "510"
-        dscl . -create /Users/joeadmin PrimaryGroupID 20
-        dscl . -create /Users/joeadmin NFSHomeDirectory /Users/joeadmin
-        dscl . -passwd /Users/joeadmin password 
-        dscl . -append /Groups/admin GroupMembership joeadmin
+        sudo mdutil -i off -a
+        sudo dscl . -create /Users/joeadmin
+        sudo dscl . -create /Users/joeadmin UserShell /bin/bash
+        sudo dscl . -create /Users/joeadmin RealName "Joe Admin" 
+        sudo dscl . -create /Users/joeadmin UniqueID "510"
+        sudo dscl . -create /Users/joeadmin PrimaryGroupID 20
+        sudo dscl . -create /Users/joeadmin NFSHomeDirectory /Users/joeadmin
+        sudo dscl . -passwd /Users/joeadmin password 
+        sudo dscl . -append /Groups/admin GroupMembership joeadmin
 
     - name: Ngrok Auth
       env:
